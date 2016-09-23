@@ -1,0 +1,6 @@
+Mmain	src/main.c	/^int		main(int ac, char **av)$/
+ft_error_dir	src/lib_error.c	/^void	ft_error_dir(char *s)$/
+ft_error_option	src/lib_error.c	/^void	ft_error_option(char c)$/
+ft_ls	src/lib_print.c	/^void	ft_ls(t_list **dirs_p)$/
+ft_parse_ls	src/lib_parse.c	/^void	ft_parse_ls(int ac, char **av, t_list **dirs,/
+ft_parse_ls_options	src/lib_parse.c	/^int		ft_parse_ls_options(int ac, char **av, char */
