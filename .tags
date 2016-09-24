@@ -1,6 +1,16 @@
 Mmain	src/main.c	/^int		main(int ac, char **av)$/
+ft_dir_get_ents	src/lib_dirs.c	/^t_list	*ft_dir_get_ents(t_lsdata *topdir)$/
+ft_ent_get_dirs	src/lib_dirents.c	/^t_list	*ft_ent_get_dirs(t_list *ent)$/
+ft_ent_handle	src/lib_dirents.c	/^void	ft_ent_handle(t_list **ent, t_lsdata *topdir,/
 ft_error_dir	src/lib_error.c	/^void	ft_error_dir(char *s)$/
 ft_error_option	src/lib_error.c	/^void	ft_error_option(char c)$/
-ft_ls	src/lib_print.c	/^void	ft_ls(t_list **dirs_p)$/
-ft_parse_ls	src/lib_parse.c	/^void	ft_parse_ls(int ac, char **av, t_list **dirs,/
+ft_ls_l	src/lib_print.c	/^void	ft_ls_l(t_lsdata *data)$/
+ft_ls_print	src/lib_print.c	/^void	ft_ls_print(t_list *ent, char *opts, t_lsdata/
+ft_ls_print_dirents	src/lib_print.c	/^void	ft_ls_print_dirents(t_list *ent, char *opts)$/
+ft_ls_print_header	src/lib_print.c	/^void	ft_ls_print_header(char *dirname)$/
+ft_lsdata_cmp0	src/lib_lsdata.c	/^int		ft_lsdata_cmp0(t_lsdata *dat1, char *dataref)/
+ft_lsdata_cmp_name	src/lib_lsdata.c	/^int		ft_lsdata_cmp_name(t_lsdata *dat1, t_lsdata */
+ft_lsdata_cmp_time	src/lib_lsdata.c	/^int		ft_lsdata_cmp_time(t_lsdata *dat1, t_lsdata */
+ft_lsdata_print	src/lib_lsdata.c	/^void	ft_lsdata_print(t_list *ent)$/
+ft_parse_ls	src/lib_parse.c	/^void	ft_parse_ls(int ac, char **av, t_list **dir, /
 ft_parse_ls_options	src/lib_parse.c	/^int		ft_parse_ls_options(int ac, char **av, char */

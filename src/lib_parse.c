@@ -1,26 +1,42 @@
 #include "ftls.h"
 
-void	ft_parse_ls(int ac, char **av, t_list **dirs, char *opts)
+void	ft_parse_ls(int ac, char **av, t_list **dir, t_list **ent, char *opts)
 {
-	int		i;
-	DIR		*dir;
+	int			i;
+	t_lsdata	data;
+	DIR			*stream;
 
-	(void)dirs;
+	ft_bzero(opts, 7);
 	i = ft_parse_ls_options(ac, av, opts);
-	ft_printf("options: %s\n", opts);
-	ft_strlsort(av + i, ac - i, &ft_strcmp);
+	/* ft_strlsort(av + i, ac - i, &ft_strcmp); */
+	if (ac - i <= 1)
+		ft_strcat(opts, "0");
+	/* ft_printf("options: %s\n", opts); */
+	/* ft_printf("%i, %i\n", i, ac); */
 	if (i == ac)
-		ft_lstadd(dirs, ft_lstnew(opendir("."), sizeof(*dir)));
+	{
+		data.path = ft_strdup(".");
+		ft_printf("stat ret: %i\n", stat(data.path, &data.stat));
+		ft_lstadd(dir, ft_lstnew(&data, sizeof(data)));
+	}
 	while (i < ac)
 	{
-		dir = opendir(av[i]);
-		if (dir)
+		data.path = ft_strdup(av[i]);
+		if (stat(data.path, &data.stat) < 0)
 		{
-			ft_lstadd(dirs, ft_lstnew(dir, sizeof(*dir)));
-			/* ft_printf("found dir %s\n", av[i]); */
+			ft_error_dir(data.path);
+		}
+		else if (!(stream = opendir(data.path)))
+		{
+			/* ft_printf("found file: %s\n", data.path); */
+			ft_lstadd(ent, ft_lstnew(&data, sizeof(data)));
 		}
 		else
-			ft_error_dir(av[i]);
+		{
+			/* ft_printf("found dir: %s\n", data.path); */
+			ft_lstadd(dir, ft_lstnew(&data, sizeof(data)));
+			closedir(stream);
+		}
 		i++;
 	}
 }
@@ -30,13 +46,13 @@ int		ft_parse_ls_options(int ac, char **av, char *opts)
 	int		i;
 	int		j;
 
-	i = 1;
-	while (i < ac)
+	i = 0;
+	while (++i < ac)
 	{
 		if (av[i][0] == '-' && av[i][1] != '\0')
 		{
-			j = 1;
-			while(av[i][j])
+			j = 0;
+			while(av[i][++j])
 			{
 				if (ft_strchr(ALL_OPTS, av[i][j]))
 				{
@@ -45,12 +61,10 @@ int		ft_parse_ls_options(int ac, char **av, char *opts)
 				}
 				else
 					ft_error_option(av[i][j]);
-				j++;
 			}
 		}
 		else
 			break ;
-		i++;
 	}
 	return (i);
 }
