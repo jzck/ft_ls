@@ -38,6 +38,8 @@ int		main(int ac, char **av)
 			ft_lst_merge(&dir_r, dir);
 			dir = dir_r;
 		}
+		if (dir)
+			ft_printf("\n");
 		/* ft_lsdata_print(dir); */
 	}
 	return (0);

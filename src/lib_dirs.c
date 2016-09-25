@@ -15,7 +15,7 @@ t_list	*ft_dir_get_ents(t_lsdata *topdir)
 		data.path = ft_strjoin(data.path, dirent->d_name);
 		/* ft_printf("looking at file: %s\n", data.path); */
 		/* ft_printf("stat ret: %i\n", stat(data.path, &data.stat)); */
-		stat(data.path, &data.stat);
+		lstat(data.path, &data.stat);
 		data.dirent = dirent;
 		/* char *date = ctime(&data.stat.st_mtime); */
 		/* date[ft_strlen(date) - 1] = '\0'; */

@@ -16,13 +16,13 @@ void	ft_parse_ls(int ac, char **av, t_list **dir, t_list **ent, char *opts)
 	if (i == ac)
 	{
 		data.path = ft_strdup(".");
-		ft_printf("stat ret: %i\n", stat(data.path, &data.stat));
+		/* ft_printf("stat ret: %i\n", stat(data.path, &data.stat)); */
 		ft_lstadd(dir, ft_lstnew(&data, sizeof(data)));
 	}
 	while (i < ac)
 	{
 		data.path = ft_strdup(av[i]);
-		if (stat(data.path, &data.stat) < 0)
+		if (lstat(data.path, &data.stat) < 0)
 		{
 			ft_error_dir(data.path);
 		}

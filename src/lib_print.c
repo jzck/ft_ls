@@ -8,21 +8,16 @@ void	ft_ls_print(t_list *ent, char *opts, t_lsdata *topdir)
 		ft_ls_print_header(topdir->path);
 	else
 		*opt = '.';
-	ft_ls_print_dirents(ent, opts);
-	ft_printf("\n");
+	if (ent)
+	{
+		if (ft_strchr(opts, 'l'))
+			ft_ls_long(ent);
+		else
+			ft_ls_short(ent);
+	}
 }
 
-void	ft_ls_l(t_lsdata *data)
-{
-	char	*date;
-
-	/* date = ctime(&data->stat.st_mtimespec.tv_sec); */
-	date = ctime(&data->stat.st_mtime);
-	date[ft_strlen(date) - 1] = '\0';
-	ft_printf("%s %s\n", date, data->dirent->d_name);
-}
-
-void	ft_ls_print_dirents(t_list *ent, char *opts)
+void	ft_ls_short(t_list *ent)
 {
 	t_lsdata		*data;
 	struct dirent	*dirent;
@@ -31,11 +26,8 @@ void	ft_ls_print_dirents(t_list *ent, char *opts)
 	{
 		data = ent->content;
 		dirent = data->dirent;
-		if (ft_strchr(opts, 'l'))
-			ft_ls_l(data);
-		else
-			ft_printf("%s\n", dirent->d_name);
 		ent = ent->next;
+		ft_printf("%s\n", dirent->d_name);
 	}
 }
 
