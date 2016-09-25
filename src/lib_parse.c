@@ -1,38 +1,42 @@
 #include "ftls.h"
 
-void	ft_parse_ls(int ac, char **av, t_list **dir, t_list **ent, char *opts)
+char	*ft_parse_ls(int ac, char **av, t_list **dir, t_list **ent)
 {
 	int			i;
+	char		*opts;
 	t_lsdata	data;
-	DIR			*stream;
 
-	ft_bzero(opts, 7);
-	data.dirent = NULL;
+	if (!(opts = (char *)ft_strnew(sizeof(char) * 7)))
+		return (NULL);
 	i = ft_parse_ls_options(ac, av, opts);
-	/* ft_strlsort(av + i, ac - i, &ft_strcmp); */
-	if (ac - i <= 1)
-		ft_strcat(opts, "0");
-	/* ft_printf("options: %s\n", opts); */
-	/* ft_printf("%i, %i\n", i, ac); */
+	ft_strcat(opts, (ac - i <= 1) ? "0" : "");
 	if (i == ac)
 	{
 		data.path = ft_strdup(".");
-		/* ft_printf("stat ret: %i\n", stat(data.path, &data.stat)); */
+		data.dirent = NULL;
 		ft_lstadd(dir, ft_lstnew(&data, sizeof(data)));
 	}
+	ft_parse_ls_files(ac - i, av + i, dir, ent);
+	return (opts);
+}
+
+void	ft_parse_ls_files(int ac, char **av, t_list **dir, t_list **ent)
+{
+	DIR			*stream;
+	t_lsdata	data;
+	int			i;
+
+	data.dirent = NULL;
+	i = 0;
 	while (i < ac)
 	{
 		data.path = ft_strdup(av[i]);
 		if (lstat(data.path, &data.stat) < 0)
 			ft_error_dir(data.path);
 		else if (!(stream = opendir(data.path)))
-		{
-			/* ft_printf("found file: %s\n", data.path); */
 			ft_lstadd(ent, ft_lstnew(&data, sizeof(data)));
-		}
 		else
 		{
-			/* ft_printf("found dir: %s\n", data.path); */
 			ft_lstadd(dir, ft_lstnew(&data, sizeof(data)));
 			closedir(stream);
 		}

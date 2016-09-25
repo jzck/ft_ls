@@ -48,7 +48,6 @@ t_list	*ft_ent_get_dirs(t_list *ent)
 	t_list			*dir;
 	t_list			*tmp;
 
-	/* ft_printf("checking dir: %s\n", topdir->path); */
 	dir = NULL;
 	while (ent)
 	{
@@ -56,19 +55,12 @@ t_list	*ft_ent_get_dirs(t_list *ent)
 		dirent = data->dirent;
 		tmp = ent;
 		ent = ent->next;
-		/* ft_printf("checking: %s\n", data->path); */
 		if (dirent->d_type == DT_DIR
 				&& ft_strcmp(dirent->d_name, ".")
 				&& ft_strcmp(dirent->d_name, ".."))
 		{
-			/* data->path = ft_strjoin(topdir->path, "/"); */
-			/* data->path = ft_strjoin(data->path, dirent->d_name); */
-			/* stat(data->path, &data->stat); */
-			/* ft_printf("found dir: %s\n", data->path); */
 			ft_lsteadd(&dir, tmp);
 		}
-		/* else */
-			/* ft_printf("%s is not a dir\n", data->path); */
 	}
 	return (dir);
 }

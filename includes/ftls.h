@@ -27,8 +27,12 @@ typedef struct	s_pads
 	int		size;
 }				t_pads;
 
-void	ft_parse_ls(int ac, char **av, t_list **dir, t_list **ent, char *opts);
+void	ft_ls_dirs(t_list *dir, char *opts);
+void	ft_ls_files(t_list *ent, t_list *dir, char *opts);
+
+char	*ft_parse_ls(int ac, char **av, t_list **dir, t_list **ent);
 int		ft_parse_ls_options(int ac, char **av, char *opts);
+void	ft_parse_ls_files(int ac, char **av, t_list **dir, t_list **ent);
 
 void	ft_lsdata_filename(t_lsdata *data);
 int		ft_lsdata_cmp_name(t_lsdata *dat1, t_lsdata *dat2);
@@ -43,7 +47,9 @@ t_list	*ft_ent_get_dirs(t_list *ent);
 t_list	*ft_dir_get_ents(t_lsdata *dir);
 
 void	ft_ls_short(t_list *ent);
+
 int		ft_ls_long(t_list *ent, t_lsdata *topdir);
+int		ft_ls_long_print(t_list *ent, t_pads pads);
 
 void	ft_ls_long_total(t_list *ent);
 int		ft_ls_long_pads(t_list *ent, t_pads *pads);

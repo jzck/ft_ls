@@ -6,11 +6,14 @@ ft_ent_print	src/lib_dirents.c	/^void	ft_ent_print(t_list *ent, char *opts, t_ls
 ft_ent_sort	src/lib_dirents.c	/^void	ft_ent_sort(t_list **ent, char *opts)$/
 ft_error_dir	src/lib_error.c	/^void	ft_error_dir(char *s)$/
 ft_error_option	src/lib_error.c	/^void	ft_error_option(char c)$/
+ft_ls_dirs	src/ft_ls.c	/^void	ft_ls_dirs(t_list *dir, char *opts)$/
+ft_ls_files	src/ft_ls.c	/^void	ft_ls_files(t_list *ent, t_list *dir, char *o/
 ft_ls_long	src/ft_ls_long.c	/^int		ft_ls_long(t_list *ent, t_lsdata *topdir)$/
 ft_ls_long_date	src/lib_ls_long.c	/^void	ft_ls_long_date(struct stat *stat)$/
 ft_ls_long_lnk	src/lib_ls_long2.c	/^int		ft_ls_long_lnk(t_lsdata *data)$/
 ft_ls_long_middle	src/lib_ls_long.c	/^int		ft_ls_long_middle(struct stat *stat, t_pads */
 ft_ls_long_pads	src/lib_ls_long2.c	/^int		ft_ls_long_pads(t_list *ent, t_pads *pads)$/
+ft_ls_long_print	src/ft_ls_long.c	/^int		ft_ls_long_print(t_list *ent, t_pads pads)$/
 ft_ls_long_rights	src/lib_ls_long2.c	/^void	ft_ls_long_rights(int st_mode)$/
 ft_ls_long_total	src/lib_ls_long2.c	/^void	ft_ls_long_total(t_list *ent)$/
 ft_ls_long_type	src/lib_ls_long.c	/^void	ft_ls_long_type(mode_t m)$/
@@ -20,5 +23,6 @@ ft_lsdata_cmp0	src/lib_lsdata.c	/^int		ft_lsdata_cmp0(t_lsdata *dat, char *datar
 ft_lsdata_cmp_name	src/lib_lsdata.c	/^int		ft_lsdata_cmp_name(t_lsdata *dat1, t_lsdata */
 ft_lsdata_cmp_time	src/lib_lsdata.c	/^int		ft_lsdata_cmp_time(t_lsdata *dat1, t_lsdata */
 ft_lsdata_filename	src/lib_lsdata.c	/^void	ft_lsdata_filename(t_lsdata *data)$/
-ft_parse_ls	src/lib_parse.c	/^void	ft_parse_ls(int ac, char **av, t_list **dir, /
+ft_parse_ls	src/lib_parse.c	/^char	*ft_parse_ls(int ac, char **av, t_list **dir,/
+ft_parse_ls_files	src/lib_parse.c	/^void	ft_parse_ls_files(int ac, char **av, t_list */
 ft_parse_ls_options	src/lib_parse.c	/^int		ft_parse_ls_options(int ac, char **av, char */
