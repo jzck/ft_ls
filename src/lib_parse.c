@@ -7,6 +7,7 @@ void	ft_parse_ls(int ac, char **av, t_list **dir, t_list **ent, char *opts)
 	DIR			*stream;
 
 	ft_bzero(opts, 7);
+	data.dirent = NULL;
 	i = ft_parse_ls_options(ac, av, opts);
 	/* ft_strlsort(av + i, ac - i, &ft_strcmp); */
 	if (ac - i <= 1)
@@ -23,9 +24,7 @@ void	ft_parse_ls(int ac, char **av, t_list **dir, t_list **ent, char *opts)
 	{
 		data.path = ft_strdup(av[i]);
 		if (lstat(data.path, &data.stat) < 0)
-		{
 			ft_error_dir(data.path);
-		}
 		else if (!(stream = opendir(data.path)))
 		{
 			/* ft_printf("found file: %s\n", data.path); */

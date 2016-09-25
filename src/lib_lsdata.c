@@ -1,12 +1,14 @@
 #include "ftls.h"
 
-void	ft_lsdata_print(t_list *ent)
+void	ft_lsdata_filename(t_lsdata *data)
 {
-	while (ent)
-	{
-		ft_printf("found recursively: %s\n", ((t_lsdata*)ent->content)->path);
-		ent = ent->next;
-	}
+	struct dirent	*dirent;
+
+	dirent = data->dirent;
+	if (dirent)
+		ft_printf("%s", dirent->d_name);
+	else
+		ft_printf("%s", data->path);
 }
 
 int		ft_lsdata_cmp_name(t_lsdata *dat1, t_lsdata *dat2)
@@ -22,7 +24,13 @@ int		ft_lsdata_cmp_time(t_lsdata *dat1, t_lsdata *dat2)
 		return (ft_strcmp(dat1->path, dat2->path));
 }
 
-int		ft_lsdata_cmp0(t_lsdata *dat1, char *dataref)
+int		ft_lsdata_cmp0(t_lsdata *dat, char *dataref)
 {
-	return (dat1->dirent->d_name[0] != *dataref);
+	char	*filename;
+
+	if (dat->dirent)
+		filename = dat->dirent->d_name;
+	else
+		filename = ft_path_notdir(dat->path);
+	return (*filename != *dataref);
 }

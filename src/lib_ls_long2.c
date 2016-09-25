@@ -1,17 +1,48 @@
 #include "ftls.h"
+#include <errno.h>
 
-void	ft_ls_long_lnk(t_lsdata *data)
+void	ft_ls_long_rights(int st_mode)
 {
-	struct stat		stat;
-	struct dirent	*dirent;
+	int		i;
+	char	*rights;
 
-	dirent = data->dirent;
-	stat = data->stat;
+	i = 0;
+	rights = ft_itoa_base(st_mode, "01", "");
+	rights = rights + ft_strlen(rights) - 9;
+	while (rights[i])
+	{
+		if (rights[i] == '0')
+			rights[i] = '-';
+		else
+		{
+			if (i % 3 == 0)
+				rights[i] = 'r';
+			else if (i % 3 == 1)
+				rights[i] = 'w';
+			else if (i % 3 == 2)
+				rights[i] = 'x';
+		}
+		i++;
+	}
+	ft_printf("%s", rights);
+}
 
-	if (dirent->d_type == DT_LNK)
-		ft_printf(" -> unknown\n");
+int		ft_ls_long_lnk(t_lsdata *data)
+{
+	struct stat		statbuf;
+	int				ret;
+
+	ft_bzero(&statbuf, sizeof(statbuf));
+	if (S_ISLNK(data->stat.st_mode))
+	{
+		printf(" -> %lld\n", statbuf.st_size);
+		printf("path: %s\n", data->path);
+		if ((ret = stat(data->path, &statbuf)) == -1)
+			printf("stat=%i, errno=%i\n", ret, errno);
+	}
 	else
-		ft_printf("\n");
+		printf("\n");
+	return (0);
 }
 
 int		ft_ls_long_xattr(char *path)
@@ -19,14 +50,20 @@ int		ft_ls_long_xattr(char *path)
 	int		n;
 	char	x;
 
+	x = ' ';
 	if ((n = ft_xattr_count(path)) == -1)
+	{
+		printf("\ncouldnt get xattr: %i\n", n);
 		return (1);
-	x = n > 0 ? '@' : '\0';
-	ft_printf("%1c", x);
+	}
+	if (n > 0)
+		x = '@';
+	/* ft_printf("%c", x); */
+	ft_putchar(x);
 	return (0);
 }
 
-int		ft_ls_long_total(t_list *ent)
+void	ft_ls_long_total(t_list *ent)
 {
 	struct stat		stat;
 	t_lsdata		*data;
@@ -42,8 +79,7 @@ int		ft_ls_long_total(t_list *ent)
 
 		total += stat.st_blocks;
 	}
-	ft_printf("total %i\n", total);
-	return (0);
+	printf("total %i\n", total);
 }
 
 int		ft_ls_long_pads(t_list *ent, t_pads *pads)
