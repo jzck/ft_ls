@@ -35,13 +35,13 @@ int		ft_ls_long_lnk(t_lsdata *data)
 	ft_bzero(&statbuf, sizeof(statbuf));
 	if (S_ISLNK(data->stat.st_mode))
 	{
-		printf(" -> %lld\n", statbuf.st_size);
-		printf("path: %s\n", data->path);
+		ft_printf(" -> %lld\n", statbuf.st_size);
+		ft_printf("path: %s\n", data->path);
 		if ((ret = stat(data->path, &statbuf)) == -1)
-			printf("stat=%i, errno=%i\n", ret, errno);
+			ft_printf("stat=%i, errno=%i\n", ret, errno);
 	}
 	else
-		printf("\n");
+		ft_putendl("");
 	return (0);
 }
 
@@ -53,12 +53,11 @@ int		ft_ls_long_xattr(char *path)
 	x = ' ';
 	if ((n = ft_xattr_count(path)) == -1)
 	{
-		printf("\ncouldnt get xattr: %i\n", n);
+		ft_printf("\ncouldnt get xattr: %i\n", n);
 		return (1);
 	}
 	if (n > 0)
 		x = '@';
-	/* ft_printf("%c", x); */
 	ft_putchar(x);
 	return (0);
 }
@@ -74,12 +73,11 @@ void	ft_ls_long_total(t_list *ent)
 	{
 		data = ent->content;
 		stat = data->stat;
-		/* dirent = data->dirent; */
 		ent = ent->next;
 
 		total += stat.st_blocks;
 	}
-	printf("total %i\n", total);
+	ft_printf("total %i\n", total);
 }
 
 int		ft_ls_long_pads(t_list *ent, t_pads *pads)
@@ -93,7 +91,6 @@ int		ft_ls_long_pads(t_list *ent, t_pads *pads)
 	{
 		data = ent->content;
 		stat = data->stat;
-		/* dirent = data->dirent; */
 		ent = ent->next;
 
 		if ((pwd = getpwuid(stat.st_uid)) == NULL)

@@ -1,5 +1,4 @@
 #include "ftls.h"
-#include "ftls.h"
 
 int		main(int ac, char **av)
 {

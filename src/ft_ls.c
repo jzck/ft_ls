@@ -18,9 +18,13 @@ void	ft_ls_dirs(t_list *dir, char *opts)
 		ft_ent_print(ent, opts, dirdata, dir);
 		if (ft_strchr(opts, 'R'))
 		{
+			ft_debug();
 			dir_r = ft_ent_get_dirs(ent);
+			ft_debug();
 			ft_lst_merge(&dir_r, dir);
+			ft_debug();
 			dir = dir_r;
+			ft_debug();
 		}
 	}
 }

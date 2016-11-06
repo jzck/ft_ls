@@ -21,10 +21,7 @@ RM		=	/bin/rm -rf
 
 .PHONY: all clean fclean re tags test libft
 
-all: libft $(NAME) $(TAGFILE)
-
-test:
-	gcc -Iincludes main.c libftprintf.a
+all: $(NAME) $(TAGFILE)
 
 $(TAGFILE): $(D_SRC)/*.c
 	@ctags -f $(TAGFILE) $(addprefix $(D_SRC)/, $(F_SRC))
@@ -38,13 +35,15 @@ $(D_OBJ)/%.o: $(D_SRC)/%.c $(D_INC)
 libft:
 	@$(MAKE) -C libft/ 2>/dev/null
 
-$(NAME): $(DF_OBJ) libft/libft.a
+$(NAME): libft $(DF_OBJ) libft/libft.a
 	$(CC) $(O_INC) -Llibft -lft $(W_FLAGS) $(DF_OBJ) -o $@ $(D_FLAGS)
 
 clean:
 	$(RM) $(D_OBJ)
+	@$(MAKE) -C libft clean 2>/dev/null
 
 fclean: clean
 	$(RM) $(NAME)
+	@$(MAKE) -C libft fclean 2>/dev/null
 
 re: fclean all
