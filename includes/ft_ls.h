@@ -1,5 +1,17 @@
-#ifndef FTLS_H
-# define FTLS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ftls.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/07 15:10:03 by jhalford          #+#    #+#             */
+/*   Updated: 2016/11/07 17:38:28 by jhalford         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef FT_LS_H
+# define FT_LS_H
 # define ALL_OPTS "lRart"
 # include "libft.h"
 # include <errno.h>
@@ -12,20 +24,23 @@
 # include <grp.h>
 # include <sys/xattr.h>
 
-typedef struct	s_lsdata
+struct	s_lsdata
 {
 	struct stat		stat;
 	char			*path;
 	struct dirent	*dirent;
-}				t_lsdata;
+};
 
-typedef struct	s_pads
+struct	s_pads
 {
 	int		nlink;
 	int		name;
 	int		gr_name;
 	int		size;
-}				t_pads;
+};
+
+typedef struct s_lsdata		t_lsdata;
+typedef struct s_pads		t_pads;
 
 void	ft_ls_dirs(t_list *dir, char *opts);
 void	ft_ls_files(t_list *ent, t_list *dir, char *opts);
@@ -41,7 +56,8 @@ int		ft_lsdata_cmp0(t_lsdata *dat1, char *dataref);
 
 void	ft_ent_filter(t_list **ent, char *opts);
 void	ft_ent_sort(t_list **ent, char *opts);
-void	ft_ent_print(t_list *ent, char *opts, t_lsdata *topdir, t_list *nextdir);
+void	ft_ent_print(
+		t_list *ent, char *opts, t_lsdata *topdir, t_list *nextdir);
 
 t_list	*ft_ent_get_dirs(t_list *ent);
 t_list	*ft_dir_get_ents(t_lsdata *dir);
@@ -59,7 +75,6 @@ int		ft_ls_long_xattr(char *path);
 int		ft_ls_long_middle(struct stat *stat, t_pads *pads);
 void	ft_ls_long_date(struct stat *stat);
 int		ft_ls_long_lnk(t_lsdata *data);
-
 
 void	ft_error_option(char c);
 void	ft_error_dir(char *s);

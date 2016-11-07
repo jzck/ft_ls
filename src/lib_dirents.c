@@ -1,4 +1,16 @@
-#include "ftls.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lib_dirents.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/07 15:00:05 by jhalford          #+#    #+#             */
+/*   Updated: 2016/11/07 17:42:16 by jhalford         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_ls.h"
 
 void	ft_ent_filter(t_list **ent, char *opts)
 {
@@ -59,6 +71,7 @@ t_list	*ft_ent_get_dirs(t_list *ent)
 				&& ft_strcmp(dirent->d_name, ".")
 				&& ft_strcmp(dirent->d_name, ".."))
 		{
+			tmp->next = NULL;
 			ft_lsteadd(&dir, tmp);
 		}
 	}

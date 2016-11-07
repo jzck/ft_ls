@@ -1,4 +1,16 @@
-#include "ftls.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lib_parse.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/07 15:02:46 by jhalford          #+#    #+#             */
+/*   Updated: 2016/11/07 17:53:03 by jhalford         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_ls.h"
 
 char	*ft_parse_ls(int ac, char **av, t_list **dir, t_list **ent)
 {
@@ -55,7 +67,7 @@ int		ft_parse_ls_options(int ac, char **av, char *opts)
 		if (av[i][0] == '-' && av[i][1] != '\0')
 		{
 			j = 0;
-			while(av[i][++j])
+			while (av[i][++j])
 			{
 				if (ft_strchr(ALL_OPTS, av[i][j]))
 				{

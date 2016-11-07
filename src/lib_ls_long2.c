@@ -1,4 +1,16 @@
-#include "ftls.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lib_ls_long2.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/07 15:01:01 by jhalford          #+#    #+#             */
+/*   Updated: 2016/11/07 17:38:27 by jhalford         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_ls.h"
 #include <errno.h>
 
 void	ft_ls_long_rights(int st_mode)
@@ -29,16 +41,15 @@ void	ft_ls_long_rights(int st_mode)
 
 int		ft_ls_long_lnk(t_lsdata *data)
 {
-	struct stat		statbuf;
 	int				ret;
+	char			buf[1024];
 
-	ft_bzero(&statbuf, sizeof(statbuf));
 	if (S_ISLNK(data->stat.st_mode))
 	{
-		ft_printf(" -> %lld\n", statbuf.st_size);
-		ft_printf("path: %s\n", data->path);
-		if ((ret = stat(data->path, &statbuf)) == -1)
-			ft_printf("stat=%i, errno=%i\n", ret, errno);
+		if ((ret = readlink(data->path, buf, 1024)) < 0)
+			return (-1);
+		buf[ret] = '\0';
+		ft_printf(" -> %s\n", buf);
 	}
 	else
 		ft_putendl("");
@@ -74,7 +85,6 @@ void	ft_ls_long_total(t_list *ent)
 		data = ent->content;
 		stat = data->stat;
 		ent = ent->next;
-
 		total += stat.st_blocks;
 	}
 	ft_printf("total %i\n", total);
@@ -87,12 +97,15 @@ int		ft_ls_long_pads(t_list *ent, t_pads *pads)
 	struct stat		stat;
 	t_lsdata		*data;
 
+	pads->nlink = 0;
+	pads->name = 0;
+	pads->gr_name = 0;
+	pads->size = 0;
 	while (ent)
 	{
 		data = ent->content;
 		stat = data->stat;
 		ent = ent->next;
-
 		if ((pwd = getpwuid(stat.st_uid)) == NULL)
 			return (1);
 		if ((grp = getgrgid(stat.st_gid)) == NULL)

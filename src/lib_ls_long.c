@@ -1,4 +1,16 @@
-#include "ftls.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lib_ls_long.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/11/07 14:59:51 by jhalford          #+#    #+#             */
+/*   Updated: 2016/11/07 17:29:49 by jhalford         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_ls.h"
 
 int		ft_ls_long_middle(struct stat *stat, t_pads *pads)
 {
@@ -30,7 +42,6 @@ void	ft_ls_long_date(struct stat *stat)
 	time = ft_time_isrecent(stat->st_mtime)
 		? ft_strsub(date, 11, 5)
 		: ft_strsub(date, 20, 4);
-	/* ft_putstr(day); */
 	ft_printf(" %s %s %5s", day, month, time);
 }
 
@@ -48,4 +59,3 @@ void	ft_ls_long_type(mode_t m)
 	type = S_ISLNK(m) ? 'l' : type;
 	ft_printf("%c", type);
 }
-
