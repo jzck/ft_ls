@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:00:05 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/07 17:42:16 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/08 15:01:55 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_ent_filter(t_list **ent, char *opts)
 {
 	if (!ft_strchr(opts, 'a'))
-		ft_lst_delif(ent, ".", &ft_lsdata_cmp0, &ft_lst_cfree);
+		ft_lst_delif(ent, ".", &ft_lsdata_cmp0, &ft_ent_free);
 }
 
 void	ft_ent_sort(t_list **ent, char *opts)

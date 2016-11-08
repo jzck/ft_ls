@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:57:43 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/07 15:30:13 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/08 15:29:02 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	ft_error_option(char c)
 {
-	ft_printf("warning option '%c' is unsupported\n", c);
+	ft_printf(LS_MSG_ILLEGAL_OPT, c);
+	ft_printf(LS_MSG_USAGE, LS_LEGAL_OPTS);
 }
 
 void	ft_error_dir(char *s)
 {
-	ft_printf("ls: %s: no such file or directory\n", s);
+	ft_printf(LS_MSG_FILE_ERR, s);
 }

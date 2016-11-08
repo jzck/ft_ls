@@ -6,20 +6,19 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:01:01 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/07 17:38:27 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/08 16:26:08 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-#include <errno.h>
 
-void	ft_ls_long_rights(int st_mode)
+void	ft_ls_long_rights(mode_t m)
 {
 	int		i;
 	char	*rights;
 
 	i = 0;
-	rights = ft_itoa_base(st_mode, "01", "");
+	rights = ft_itoa_base(m, "01", "");
 	rights = rights + ft_strlen(rights) - 9;
 	while (rights[i])
 	{
@@ -56,17 +55,20 @@ int		ft_ls_long_lnk(t_lsdata *data)
 	return (0);
 }
 
-int		ft_ls_long_xattr(char *path)
+int		ft_ls_long_xattr(mode_t m, char *path)
 {
 	int		n;
 	char	x;
 
 	x = ' ';
-	if ((n = ft_xattr_count(path)) == -1)
-	{
-		ft_printf("\ncouldnt get xattr: %i\n", n);
-		return (1);
-	}
+	n = 0;
+	if (!(m & (S_IFCHR | S_IFBLK)))
+		if ((n = ft_xattr_count(path)) == -1)
+		{
+			;
+			/* ft_printf("\ncouldnt get xattr: %i\n", n); */
+			/* return (1); */
+		}
 	if (n > 0)
 		x = '@';
 	ft_putchar(x);
@@ -90,30 +92,33 @@ void	ft_ls_long_total(t_list *ent)
 	ft_printf("total %i\n", total);
 }
 
+#define FT_MAX_WR(a,b)	a = FT_MAX(a,b)
+
 int		ft_ls_long_pads(t_list *ent, t_pads *pads)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
 	struct stat		stat;
-	t_lsdata		*data;
 
-	pads->nlink = 0;
-	pads->name = 0;
-	pads->gr_name = 0;
-	pads->size = 0;
+	ft_bzero(pads, sizeof(*pads));
 	while (ent)
 	{
-		data = ent->content;
-		stat = data->stat;
+		stat = ((t_lsdata*)ent->content)->stat;
 		ent = ent->next;
-		if ((pwd = getpwuid(stat.st_uid)) == NULL)
+		if (!(pwd = getpwuid(stat.st_uid)))
 			return (1);
-		if ((grp = getgrgid(stat.st_gid)) == NULL)
+		if (!(grp = getgrgid(stat.st_gid)))
 			return (1);
-		pads->nlink = FT_MAX(pads->nlink, (int)ft_uilen(stat.st_nlink));
-		pads->name = FT_MAX(pads->name, (int)ft_strlen(pwd->pw_name));
-		pads->gr_name = FT_MAX(pads->gr_name, (int)ft_strlen(grp->gr_name));
-		pads->size = FT_MAX(pads->size, (int)ft_ilen(stat.st_size));
+		FT_MAX_WR(pads->name, (int)ft_strlen(pwd->pw_name));
+		FT_MAX_WR(pads->gr_name, (int)ft_strlen(grp->gr_name));
+		FT_MAX_WR(pads->nlink, (int)ft_uilen(stat.st_nlink));
+		FT_MAX_WR(pads->size, (int)ft_ilen(stat.st_size));
+		if (S_ISCHR(stat.st_mode) || S_ISBLK(stat.st_mode))
+		{
+			FT_MAX_WR(pads->minor, (int)ft_ilen(minor(stat.st_rdev)));
+			FT_MAX_WR(pads->major, (int)ft_ilen(major(stat.st_rdev)));
+		}
 	}
+	pads->size = FT_MAX(pads->size, pads->minor + pads->major + 3);
 	return (0);
 }
