@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:02:46 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/08 16:26:12 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/16 17:46:05 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,50 +36,61 @@ static void	ft_ls_parse_files(int ac, char **av, t_list **dir, t_list **ent)
 	}
 }
 
-static int	ft_ls_parse_options(int ac, char **av, char *opts)
+static int	ft_getopts(char *str)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	opts;
+
+	i = 0;
+	opts = 0;
+	while (str[i])
+	{
+		if (str[i] == 'l')
+			opts |= OPTS_LL;
+		else if (str[i] == 'a')
+			opts |= OPTS_LA;
+		else if (str[i] == 't')
+			opts |= OPTS_LT;
+		else if (str[i] == 'r')
+			opts |= OPTS_LR;
+		else if (str[i] == 'R')
+			opts |= OPTS_UR;
+		else
+		{
+			ft_error_option(str[i]);
+			exit(1);
+		}
+		i++;
+	}
+	return (opts);
+}
+
+static int	ft_ls_parse_options(int ac, char **av, int *opts)
+{
+	int	i;
 
 	i = 0;
 	while (++i < ac)
 	{
 		if (av[i][0] == '-')
-		{
-			j = 0;
-			while (av[i][++j])
-			{
-				if (!ft_strchr(LS_LEGAL_OPTS, av[i][j]))
-				{
-					ft_error_option(av[i][j]);
-					exit(1);
-				}
-				else if (!ft_strchr(opts, av[i][j]))
-					ft_strcat(opts, av[i] + j);
-			}
-		}
+			*opts |= ft_getopts(av[i] + 1);
 		else
 			break ;
 	}
 	return (i);
 }
 
-char		*ft_ls_parse(int ac, char **av, t_list **dir, t_list **ent)
+int			ft_ls_parse(int ac, char **av, t_list **dir, t_list **ent)
 {
-	int			i;
-	char		*opts;
-	t_lsdata	data;
+	int		i;
+	int		opts;
 
-	if (!(opts = (char *)ft_strnew(sizeof(char) * 7)))
-		return (NULL);
-	i = ft_ls_parse_options(ac, av, opts);
-	ft_strcat(opts, (ac - i <= 1) ? "0" : "");
+	opts = 0;
+	i = ft_ls_parse_options(ac, av, &opts);
+	opts &= ((ac - i <= 1) ? ~0 : ~OPTS_HEAD);
 	if (i == ac)
-	{
-		data.path = ft_strdup(".");
-		data.dirent = NULL;
-		ft_lstadd(dir, ft_lstnew(&data, sizeof(data)));
-	}
-	ft_ls_parse_files(ac - i, av + i, dir, ent);
+		ft_ls_parse_files(1, (char*[2]){"."}, dir, ent);
+	else
+		ft_ls_parse_files(ac - i, av + i, dir, ent);
 	return (opts);
 }

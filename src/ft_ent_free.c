@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 11:10:13 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/08 15:05:59 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/16 12:28:28 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_ent_free(void *ptr, size_t size)
 		if (data->path)
 			ft_strdel(&data->path);
 		if (data->dirent)
-			free(data->dirent);
+			ft_memdel((void **)&data->dirent);
 		free(data);
 	}
 }

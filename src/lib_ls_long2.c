@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:01:01 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/08 16:26:08 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/16 17:51:27 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,15 @@
 
 void	ft_ls_long_rights(mode_t m)
 {
-	int		i;
-	char	*rights;
-
-	i = 0;
-	rights = ft_itoa_base(m, "01", "");
-	rights = rights + ft_strlen(rights) - 9;
-	while (rights[i])
-	{
-		if (rights[i] == '0')
-			rights[i] = '-';
-		else
-		{
-			if (i % 3 == 0)
-				rights[i] = 'r';
-			else if (i % 3 == 1)
-				rights[i] = 'w';
-			else if (i % 3 == 2)
-				rights[i] = 'x';
-		}
-		i++;
-	}
-	ft_printf("%s", rights);
+	ft_putchar(m & S_IRUSR ? 'r' : '-');
+	ft_putchar(m & S_IWUSR ? 'w' : '-');
+	ft_putchar(m & S_IXUSR ? 'x' : '-');
+	ft_putchar(m & S_IRGRP ? 'r' : '-');
+	ft_putchar(m & S_IWGRP ? 'w' : '-');
+	ft_putchar(m & S_IXGRP ? 'x' : '-');
+	ft_putchar(m & S_IROTH ? 'r' : '-');
+	ft_putchar(m & S_IWOTH ? 'w' : '-');
+	ft_putchar(m & S_IXOTH ? 'x' : '-');
 }
 
 int		ft_ls_long_lnk(t_lsdata *data)
@@ -66,8 +53,6 @@ int		ft_ls_long_xattr(mode_t m, char *path)
 		if ((n = ft_xattr_count(path)) == -1)
 		{
 			;
-			/* ft_printf("\ncouldnt get xattr: %i\n", n); */
-			/* return (1); */
 		}
 	if (n > 0)
 		x = '@';

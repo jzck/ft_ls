@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:58:49 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/08 15:04:00 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/16 18:21:48 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ t_list	*ft_dir_get_ents(t_lsdata *topdir)
 	{
 		data.path = ft_str3join(topdir->path, "/", dirent->d_name);
 		lstat(data.path, &data.stat);
-		data.dirent = ft_memalloc(sizeof(dirent));
-		ft_memcpy(data.dirent, &dirent, sizeof(dirent));
+		data.dirent = ft_memalloc(sizeof(*dirent) + 1);
+		ft_memcpy(data.dirent, dirent, sizeof(*dirent));
 		ft_lstadd(&ent, ft_lstnew(&data, sizeof(data)));
+		ft_printf("malloc'd ent at %p (%s)\n", ent, data.path);
 	}
 	closedir(stream);
 	return (ent);

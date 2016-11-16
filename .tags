@@ -1,15 +1,17 @@
 FT_MAX_WR	src/lib_ls_long2.c	/^#define FT_MAX_WR(a,b)	a = FT_MAX(a,b)$/
 Mmain	src/main.c	/^int		main(int ac, char **av)$/
 ft_dir_get_ents	src/ft_dir_get_ents.c	/^t_list	*ft_dir_get_ents(t_lsdata *topdir)$/
-ft_ent_filter	src/lib_dirents.c	/^void	ft_ent_filter(t_list **ent, char *opts)$/
+ft_ent_filter	src/lib_ent.c	/^void	ft_ent_filter(t_list **ent, int opts)$/
 ft_ent_free	src/ft_ent_free.c	/^void	ft_ent_free(void *ptr, size_t size)$/
-ft_ent_get_dirs	src/lib_dirents.c	/^t_list	*ft_ent_get_dirs(t_list *ent)$/
-ft_ent_print	src/lib_dirents.c	/^void	ft_ent_print(t_list *ent, char *opts, t_lsdat/
-ft_ent_sort	src/lib_dirents.c	/^void	ft_ent_sort(t_list **ent, char *opts)$/
+ft_ent_get_dirs	src/ft_ent_get_dirs.c	/^t_list	*ft_ent_get_dirs(t_list **ent)$/
+ft_ent_has_dir	src/ft_ent_has_dir.c	/^int		ft_ent_has_dir(t_list *ent)$/
+ft_ent_print	src/lib_ent.c	/^void	ft_ent_print(t_list *ent, int *opts, t_lsdata/
+ft_ent_sort	src/lib_ent.c	/^void	ft_ent_sort(t_list **ent, int opts)$/
 ft_error_dir	src/lib_error.c	/^void	ft_error_dir(char *s)$/
 ft_error_option	src/lib_error.c	/^void	ft_error_option(char c)$/
-ft_ls_dirs	src/ft_ls.c	/^void	ft_ls_dirs(t_list *dir, char *opts)$/
-ft_ls_files	src/ft_ls.c	/^void	ft_ls_files(t_list *ent, t_list *dir, char *o/
+ft_getopts	src/lib_parse.c	/^static int	ft_getopts(char *str)$/
+ft_ls_dirs	src/ft_ls.c	/^void	ft_ls_dirs(t_list *dir, int opts)$/
+ft_ls_files	src/ft_ls.c	/^void	ft_ls_files(t_list *ent, t_list *dir, int opt/
 ft_ls_long	src/ft_ls_long.c	/^int		ft_ls_long(t_list *ent, t_lsdata *topdir)$/
 ft_ls_long_date	src/lib_ls_long.c	/^void	ft_ls_long_date(struct stat *stat)$/
 ft_ls_long_lnk	src/lib_ls_long2.c	/^int		ft_ls_long_lnk(t_lsdata *data)$/
@@ -20,7 +22,7 @@ ft_ls_long_rights	src/lib_ls_long2.c	/^void	ft_ls_long_rights(mode_t m)$/
 ft_ls_long_total	src/lib_ls_long2.c	/^void	ft_ls_long_total(t_list *ent)$/
 ft_ls_long_type	src/lib_ls_long.c	/^void	ft_ls_long_type(mode_t m)$/
 ft_ls_long_xattr	src/lib_ls_long2.c	/^int		ft_ls_long_xattr(mode_t m, char *path)$/
-ft_ls_parse	src/lib_parse.c	/^char		*ft_ls_parse(int ac, char **av, t_list **dir/
+ft_ls_parse	src/lib_parse.c	/^int			ft_ls_parse(int ac, char **av, t_list **dir,/
 ft_ls_parse_files	src/lib_parse.c	/^static void	ft_ls_parse_files(int ac, char **av, t/
 ft_ls_parse_options	src/lib_parse.c	/^static int	ft_ls_parse_options(int ac, char **av, /
 ft_ls_short	src/ft_ls_short.c	/^void	ft_ls_short(t_list *ent)$/

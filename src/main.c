@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:00:15 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/08 16:26:15 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/16 17:08:37 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		main(int ac, char **av)
 {
-	t_list		*dir;
-	t_list		*ent;
-	char		*opts;
+	t_list	*dir;
+	t_list	*ent;
+	int		opts;
 
 	dir = NULL;
 	ent = NULL;
@@ -24,6 +24,5 @@ int		main(int ac, char **av)
 	ft_ls_files(ent, dir, opts);
 	ft_lstdel(&ent, &ft_ent_free);
 	ft_ls_dirs(dir, opts);
-	ft_strdel(&opts);
 	return (errno);
 }

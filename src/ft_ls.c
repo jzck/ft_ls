@@ -6,13 +6,13 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:57:21 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/08 15:04:46 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/16 18:22:06 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_ls_dirs(t_list *dir, char *opts)
+void	ft_ls_dirs(t_list *dir, int opts)
 {
 	t_list		*dir_r;
 	t_list		*ent;
@@ -20,31 +20,34 @@ void	ft_ls_dirs(t_list *dir, char *opts)
 	t_list		*tmp;
 
 	ft_ent_sort(&dir, opts);
+	ent = NULL;
 	while (dir)
 	{
 		dirdata = dir->content;
 		tmp = dir;
 		dir = dir->next;
+		ft_lstdel(&ent, &ft_ent_free);
 		ent = ft_dir_get_ents(dirdata);
 		ft_ent_sort(&ent, opts);
 		ft_ent_filter(&ent, opts);
-		ft_ent_print(ent, opts, dirdata, dir);
-		if (ft_strchr(opts, 'R'))
+		ft_ent_print(ent, &opts, dirdata, dir);
+		if (opts & OPTS_UR)
 		{
-			dir_r = ft_ent_get_dirs(ent);
+			dir_r = ft_ent_get_dirs(&ent);
 			ft_lst_merge(&dir_r, dir);
 			dir = dir_r;
 		}
 		ft_lstdelone(&tmp, &ft_ent_free);
 	}
+	ft_lstdel(&ent, &ft_ent_free);
 }
 
-void	ft_ls_files(t_list *ent, t_list *dir, char *opts)
+void	ft_ls_files(t_list *ent, t_list *dir, int opts)
 {
 	if (ent)
 	{
 		ft_ent_sort(&ent, opts);
 		ft_ent_filter(&ent, opts);
-		ft_ent_print(ent, opts, NULL, dir);
+		ft_ent_print(ent, &opts, NULL, dir);
 	}
 }

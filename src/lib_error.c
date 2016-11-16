@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:57:43 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/08 15:29:02 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/16 11:05:56 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_error_option(char c)
 {
-	ft_printf(LS_MSG_ILLEGAL_OPT, c);
-	ft_printf(LS_MSG_USAGE, LS_LEGAL_OPTS);
+	ft_dprintf(2, LS_MSG_ILLEGAL_OPT, c);
+	ft_dprintf(2, LS_MSG_USAGE, LS_LEGAL_OPTS);
 }
 
 void	ft_error_dir(char *s)

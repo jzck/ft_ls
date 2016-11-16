@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:59:51 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/08 10:54:39 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/16 17:59:58 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ void	ft_ls_long_date(struct stat *stat)
 		? ft_strsub(date, 11, 5)
 		: ft_strsub(date, 20, 4);
 	ft_printf(" %s %s %5s", month, day, time);
+	free(month);
+	free(day);
+	free(time);
 }
 
 void	ft_ls_long_type(mode_t m)
