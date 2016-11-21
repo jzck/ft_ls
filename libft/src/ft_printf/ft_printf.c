@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:33:27 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/21 15:15:04 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/21 18:22:26 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,44 @@ int	ft_dprintf(int fd, const char *format, ...)
 int	ft_vdprintf(int fd, const char *format, va_list ap)
 {
 	char	*str;
-	char	*transform;
-	char	final[1000];
-	t_fmt	*fmt;
+	char	*tmp;
+	char	*final;
 
 	str = (char *)format;
-	ft_bzero(final, 1000);
+	final = ft_strnew(1);
 	while (*str)
 	{
+		tmp = final;
 		if (*str == '%')
 		{
-			str++;
-			if (!(fmt = ft_printf_parse(&str, ap)))
+			if (ft_fmtcalc(&final, &str, ap))
 				return (1);
-			if (!fmt->valid)
-				ft_strncat(final, &fmt->conversion, 1);
-			else
-			{
-				transform = ft_transform(fmt, ap);
-				ft_strcat(final, transform);
-				free(transform);
-			}
-			free(fmt);
 		}
 		else
-			ft_strncat(final, str++, 1);
+			final = ft_strjoin(final, (char[]){*str++, 0});
+		ft_strdel(&tmp);
 	}
 	ft_putstr_fd(final, fd);
+	ft_strdel(&final);
+	return (0);
+}
+
+int	ft_fmtcalc(char **final, char **str, va_list ap)
+{
+	t_fmt	*fmt;
+	char	*transform;
+
+	*str += 1;
+	if (!(fmt = ft_printf_parse(str, ap)))
+		return (1);
+	if (!fmt->valid)
+		ft_strncat(*final, &fmt->conversion, 1);
+	else
+	{
+		transform = ft_transform(fmt, ap);
+		*final = ft_strjoin(*final, transform);
+		ft_strdel(&transform);
+	}
+	free(fmt);
 	return (0);
 }

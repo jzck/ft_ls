@@ -8,7 +8,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +51 src/lib_ls_long2.c
+badd +28 src/lib_ls_long2.c
 badd +23 src/ft_ls_long.c
 badd +1 includes/ft_ls.h
 badd +60 ~/.tmux.conf
@@ -26,8 +26,8 @@ badd +1 Makefile
 badd +22 src/lib_error.c
 badd +32 src/lib_dirs.c
 badd +31 src/ft_dir_get_ents.c
-badd +9 libft/src/ft_printf/ft_printf.c
-badd +43 libft/includes/ft_printf.h
+badd +69 libft/src/ft_printf/ft_printf.c
+badd +46 libft/includes/ft_printf.h
 badd +2 libft/src/printing/ft_putstr_fd.c
 badd +11 libft/includes/libft.h
 badd +2 libft/src/ft_printf/lib_fmt.c
@@ -44,14 +44,16 @@ badd +25 libft/src/lst/ft_lst_removeif.c
 badd +42 ~/.vimrc
 badd +12 src/ft_ent_has_dir.c
 badd +35 src/ft_ent_get_dirs.c
-badd +1 src/lib_ent.c
+badd +18 src/lib_ent.c
 badd +11 .Makefile.swp
 badd +18 ~/dotfiles/vim.symlink/plugins.vim
 badd +22 libft/src/str/ft_strsub.c
 badd +1 libft/Makefile
 badd +14 libft/src/btree/btree_print.c
 badd +14 libft/src/printing/ft_putaddr.c
-badd +1 libft/src/str/ft_strinsert.c
+badd +13 libft/src/str/ft_strinsert.c
+badd +20 libft/src/str/ft_strdel.c
+badd +22 libft/src/str/ft_strjoin.c
 args src/lib_ls_long2.c
 edit includes/ft_ls.h
 set splitbelow splitright
@@ -123,38 +125,14 @@ if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 23
-normal! 011l
-tabedit src/lib_ent.c
+normal! 01l
+tabedit src/ft_ls.c
 set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 90 + 90) / 181)
-exe 'vert 2resize ' . ((&columns * 90 + 90) / 181)
 argglobal
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 38 - ((37 * winheight(0) + 40) / 80)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-38
-normal! 01l
-wincmd w
-argglobal
-edit src/ft_ls.c
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -170,54 +148,7 @@ exe s:l
 normal! zt
 49
 normal! 026l
-wincmd w
-exe 'vert 1resize ' . ((&columns * 90 + 90) / 181)
-exe 'vert 2resize ' . ((&columns * 90 + 90) / 181)
-tabedit src/lib_ls_long2.c
-set splitbelow splitright
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-argglobal
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 40) / 80)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-1
-normal! 0
-tabedit libft/src/str/ft_strinsert.c
-set splitbelow splitright
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-argglobal
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 40) / 80)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-1
-normal! 0
-tabnext 4
+tabnext 2
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
 endif

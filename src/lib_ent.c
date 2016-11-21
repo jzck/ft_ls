@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:00:05 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/21 17:22:13 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/21 18:23:05 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	ft_ent_filter(t_list **ent, int opts)
 {
-	/* (void)ent; */
-	/* (void)opts; */
 	if (!(opts & OPTS_LA))
 		ft_lst_delif(ent, ".", &ft_lsdata_cmp0, &ft_ent_free);
 }
