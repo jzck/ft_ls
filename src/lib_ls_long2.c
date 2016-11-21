@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:01:01 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/16 17:51:27 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/21 17:29:24 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,22 @@ void	ft_ls_long_rights(mode_t m)
 {
 	ft_putchar(m & S_IRUSR ? 'r' : '-');
 	ft_putchar(m & S_IWUSR ? 'w' : '-');
-	ft_putchar(m & S_IXUSR ? 'x' : '-');
+	if (m & S_ISUID)
+		ft_putchar(m & S_IXUSR ? 's' : 'S');
+	else
+		ft_putchar(m & S_IXUSR ? 'x' : '-');
 	ft_putchar(m & S_IRGRP ? 'r' : '-');
 	ft_putchar(m & S_IWGRP ? 'w' : '-');
-	ft_putchar(m & S_IXGRP ? 'x' : '-');
+	if (m & S_ISGID)
+		ft_putchar(m & S_IXGRP ? 's' : 'S');
+	else
+		ft_putchar(m & S_IXGRP ? 'x' : '-');
 	ft_putchar(m & S_IROTH ? 'r' : '-');
 	ft_putchar(m & S_IWOTH ? 'w' : '-');
-	ft_putchar(m & S_IXOTH ? 'x' : '-');
+	if (m & S_ISVTX)
+		ft_putchar(m & S_IXOTH ? 't' : 'T');
+	else
+		ft_putchar(m & S_IXOTH ? 'x' : '-');
 }
 
 int		ft_ls_long_lnk(t_lsdata *data)
