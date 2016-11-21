@@ -14,7 +14,7 @@ D_INC	=	includes libft/includes
 O_INC	=	$(addprefix -I, $(D_INC))
 
 W_FLAGS	=	-Wall -Wextra -Werror
-D_FLAGS	=
+D_FLAGS	=	-g
 
 MKDIR	=	mkdir -p
 RM		=	/bin/rm -rf

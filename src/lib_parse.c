@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:02:46 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/16 17:46:05 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/21 14:39:25 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,22 @@ static void	ft_ls_parse_files(int ac, char **av, t_list **dir, t_list **ent)
 	int			i;
 
 	data.dirent = NULL;
-	i = 0;
-	while (i < ac)
+	i = -1;
+	while (++i < ac)
 	{
+		if (lstat(av[i], &data.stat) < 0)
+		{
+			ft_error_dir(av[i]);
+			continue ;
+		}
 		data.path = ft_strdup(av[i]);
-		if (lstat(data.path, &data.stat) < 0)
-			ft_error_dir(data.path);
-		else if (!(stream = opendir(data.path)))
-			ft_lstadd(ent, ft_lstnew(&data, sizeof(data)));
-		else
+		if ((stream = opendir(data.path)))
 		{
 			ft_lstadd(dir, ft_lstnew(&data, sizeof(data)));
 			closedir(stream);
 		}
-		i++;
+		else
+			ft_lstadd(ent, ft_lstnew(&data, sizeof(data)));
 	}
 }
 
@@ -87,7 +89,7 @@ int			ft_ls_parse(int ac, char **av, t_list **dir, t_list **ent)
 
 	opts = 0;
 	i = ft_ls_parse_options(ac, av, &opts);
-	opts &= ((ac - i <= 1) ? ~0 : ~OPTS_HEAD);
+	opts |= (ac - i > 1) ? OPTS_HEAD : 0;
 	if (i == ac)
 		ft_ls_parse_files(1, (char*[2]){"."}, dir, ent);
 	else

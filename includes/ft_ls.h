@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:10:03 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/16 17:09:56 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/21 14:30:51 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_pads		t_pads;
 int		ft_ls_parse(int ac, char **av, t_list **dir, t_list **ent);
 
 void	ft_ls_dirs(t_list *dir, int opts);
-void	ft_ls_files(t_list *ent, t_list *dir, int opts);
+void	ft_ls_files(t_list **ent, t_list **dir, t_lsdata *topdir, int *opts);
 
 void	ft_lsdata_filename(t_lsdata *data);
 int		ft_lsdata_cmp_name(t_lsdata *dat1, t_lsdata *dat2);
