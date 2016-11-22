@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:02:46 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/21 14:39:25 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/22 17:01:37 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	ft_ls_parse_files(int ac, char **av, t_list **dir, t_list **ent)
 {
-	DIR			*stream;
 	t_lsdata	data;
 	int			i;
 
@@ -28,11 +27,8 @@ static void	ft_ls_parse_files(int ac, char **av, t_list **dir, t_list **ent)
 			continue ;
 		}
 		data.path = ft_strdup(av[i]);
-		if ((stream = opendir(data.path)))
-		{
+		if (S_ISDIR(data.stat.st_mode))
 			ft_lstadd(dir, ft_lstnew(&data, sizeof(data)));
-			closedir(stream);
-		}
 		else
 			ft_lstadd(ent, ft_lstnew(&data, sizeof(data)));
 	}
@@ -49,6 +45,8 @@ static int	ft_getopts(char *str)
 	{
 		if (str[i] == 'l')
 			opts |= OPTS_LL;
+		else if (str[i] == '1')
+			opts |= OPTS_ONE;
 		else if (str[i] == 'a')
 			opts |= OPTS_LA;
 		else if (str[i] == 't')
@@ -75,7 +73,16 @@ static int	ft_ls_parse_options(int ac, char **av, int *opts)
 	while (++i < ac)
 	{
 		if (av[i][0] == '-')
+		{
+			if (!av[i][1])
+				break ;
+			if (av[i][1] == '-' && !av[i][2])
+			{
+				i++;
+				break ;
+			}
 			*opts |= ft_getopts(av[i] + 1);
+		}
 		else
 			break ;
 	}

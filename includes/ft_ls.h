@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:10:03 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/21 14:30:51 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/22 16:55:20 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@
 # define LS_MSG_ILLEGAL_OPT		"ft_ls: illegal option -- %c\n"
 # define LS_MSG_USAGE			"usage: ls [-%s] [file ...]\n"
 # define LS_MSG_FILE_ERR		"ls: %s: no such file or directory\n"
+# define LS_MSG_ACC_ERR			"ls: %s: Permission Denied\n"
 
 # define OPTS_LL		0x0001
 # define OPTS_LA		0x0002
 # define OPTS_LR		0x0004
 # define OPTS_UR		0x0008
 # define OPTS_LT		0x0010
-# define OPTS_HEAD		0x0020
+# define OPTS_ONE		0x0020
+# define OPTS_HEAD		0x1000
 
 # include "libft.h"
 # include <errno.h>
@@ -91,6 +93,7 @@ int		ft_ls_long_lnk(t_lsdata *data);
 
 void	ft_error_option(char c);
 void	ft_error_dir(char *s);
+void	ft_error_access(char *s);
 
 void	ft_ent_free(void *ptr, size_t size);
 #endif

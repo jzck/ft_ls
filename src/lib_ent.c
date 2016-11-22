@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:00:05 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/21 18:23:05 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/22 17:12:03 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ void	ft_ent_print(t_list *ent, int *opts, t_lsdata *topdir, t_list *nextdir)
 		else
 			ft_ls_short(ent);
 	}
-	if (ent && (nextdir || ((*opts & OPTS_UR) && ft_ent_has_dir(ent))))
+	/* else */
+	/* 	ft_error_access(topdir->path); */
+	if ((!topdir && nextdir && ent)
+			|| (topdir && nextdir)
+			|| (ent && ((*opts & OPTS_UR) && ft_ent_has_dir(ent))))
 		ft_putchar('\n');
 }

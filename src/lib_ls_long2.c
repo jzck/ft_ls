@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:01:01 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/21 17:54:05 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/22 16:19:55 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int		ft_ls_long_pads(t_list *ent, t_pads *pads)
 			FT_MAX_WR(pads->major, (int)ft_ilen(major(stat.st_rdev)));
 		}
 	}
-	pads->size = FT_MAX(pads->size, pads->minor + pads->major + 3);
+	pads->size = FT_MAX(pads->size, pads->minor ?
+			pads->minor + pads->major + 3 : pads->size);
 	return (0);
 }

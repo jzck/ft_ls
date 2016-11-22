@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:58:49 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/21 14:23:30 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/22 17:11:46 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ t_list	*ft_dir_get_ents(t_lsdata *topdir)
 	DIR				*stream;
 
 	ent = NULL;
-	stream = opendir(topdir->path);
+	if (!(stream = opendir(topdir->path)))
+	{
+		ft_error_access(topdir->path);
+		return (NULL);
+	}
 	while ((dirent = readdir(stream)))
 	{
 		data.path = ft_str3join(topdir->path, "/", dirent->d_name);

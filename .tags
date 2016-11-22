@@ -7,6 +7,7 @@ ft_ent_get_dirs	src/ft_ent_get_dirs.c	/^t_list	*ft_ent_get_dirs(t_list **ent)$/
 ft_ent_has_dir	src/ft_ent_has_dir.c	/^int		ft_ent_has_dir(t_list *ent)$/
 ft_ent_print	src/lib_ent.c	/^void	ft_ent_print(t_list *ent, int *opts, t_lsdata/
 ft_ent_sort	src/lib_ent.c	/^void	ft_ent_sort(t_list **ent, int opts)$/
+ft_error_access	src/lib_error.c	/^void	ft_error_access(char *s)$/
 ft_error_dir	src/lib_error.c	/^void	ft_error_dir(char *s)$/
 ft_error_option	src/lib_error.c	/^void	ft_error_option(char c)$/
 ft_getopts	src/lib_parse.c	/^static int	ft_getopts(char *str)$/
