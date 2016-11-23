@@ -6,44 +6,33 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 11:09:58 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/04 11:09:59 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/23 15:43:48 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_list_swap(t_list **current)
+void		ft_lstsort(t_list **begin_list, int (*cmp)())
 {
+	t_list	**indirect;
 	t_list	*tmp;
+	t_list	*tmp2;
 
-	tmp = (*current)->next->next;
-	(*current)->next->next = (*current);
-	(*current)->next = tmp;
-}
-
-void		ft_list_sort(t_list **begin_list, int (*cmp)())
-{
-	t_list	*current;
-	t_list	*last;
-
-	current = *begin_list;
+	indirect = begin_list;
 	if (!*begin_list)
 		return ;
-	while (current->next)
+	while (*indirect && (*indirect)->next)
 	{
-		if ((*cmp)(current->content, current->next->content) > 0)
+		if ((*cmp)((*indirect)->content, (*indirect)->next->content) > 0)
 		{
-			if (current != *begin_list)
-				last->next = current->next;
-			else
-				*begin_list = current->next;
-			ft_list_swap(&current);
-			current = *begin_list;
+			tmp = *indirect;
+			tmp2 = (*indirect)->next;
+			(*indirect)->next = (*indirect)->next->next;
+			*indirect = tmp2;
+			(*indirect)->next = tmp;
+			indirect = begin_list;
 		}
 		else
-		{
-			last = current;
-			current = current->next ? current->next : current;
-		}
+			indirect = &(*indirect)->next;
 	}
 }

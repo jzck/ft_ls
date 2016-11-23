@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 11:45:07 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/16 12:07:21 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/23 15:46:28 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_path_notdir(char *path)
 	char	*ret;
 
 	ret = path;
-	if ((slash = ft_strrchr(path, '/')))
+	if ((slash = ft_strrchr(path, '/')) && slash != path)
 		ret = slash + 1;
 	return (ret);
 }

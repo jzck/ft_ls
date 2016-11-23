@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:27:46 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/08 11:25:38 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/23 14:50:54 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list	*ft_lstnew_range(int a, int b);
 void	ft_lsteadd(t_list **alst, t_list *new);
 void	ft_lstnadd(t_list **alst, t_list *new, int n);
-void	ft_lst_sort(t_list **begin_list, int (*cmp)());
+void	ft_lstsort(t_list **begin_list, int (*cmp)());
 void	ft_lst_print(t_list *list, void (*printer)());
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);

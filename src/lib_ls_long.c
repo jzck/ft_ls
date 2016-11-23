@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:59:51 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/22 16:07:09 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/23 18:50:52 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,32 @@ int		ft_ls_long_middle(struct stat *stat, t_pads *pads)
 	return (0);
 }
 
-void	ft_ls_long_date(struct stat *stat)
+void	ft_ls_long_date(struct stat *stat, int opts)
 {
 	char	*date;
 	char	*day;
 	char	*month;
 	char	*time;
+	time_t	st_time;
 
-	date = ctime(&stat->st_mtime);
+	if (opts & OPTS_LC)
+		st_time = stat->st_ctime;
+	else if (opts & OPTS_LU)
+		st_time = stat->st_atime;
+	else if (opts & OPTS_UU)
+		st_time = stat->st_birthtime;
+	else
+		st_time = stat->st_mtime;
+	date = ctime(&st_time);
+	/* ft_printf("\nctime is:%s\n", date); */
 	month = ft_strsub(date, 4, 3);
 	day = ft_strsub(date, 8, 2);
-	time = ft_time_isrecent(stat->st_mtime)
-		? ft_strsub(date, 11, 5)
-		: ft_strsub(date, 20, 4);
+	if (ft_time_isrecent(st_time))
+		time = ft_strsub(date, 11, 5);
+	else if (ft_isdigit(date[20]))
+		time = ft_strsub(date, 20, 4);
+	else
+		time = ft_strsub(date, 23, 6);
 	ft_printf(" %s %s %5s", month, day, time);
 	free(month);
 	free(day);

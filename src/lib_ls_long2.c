@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:01:01 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/22 16:19:55 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/23 16:19:43 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,9 @@ int		ft_ls_long_xattr(mode_t m, char *path)
 
 	x = ' ';
 	n = 0;
-	if (!(m & (S_IFCHR | S_IFBLK)))
+	if (!S_ISBLK(m) && !S_ISCHR(m))
 		if ((n = ft_xattr_count(path)) == -1)
-		{
 			;
-		}
 	if (n > 0)
 		x = '@';
 	ft_putchar(x);

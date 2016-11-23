@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 13:49:04 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/16 10:58:19 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/23 13:56:46 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ size_t	ft_lllen_base(long long n, int base);
 int		ft_addrcmp(void *a, void *b);
 
 char	**ft_sstradd(char **list, char *new);
-void	ft_sstrsort(char **list, int size, int (*cmp)());
+void	ft_sstrsort(char **list, int (*cmp)());
 void	ft_sstrprint(char **list, char sep);
 char	**ft_sstrdup(char **list);
 void	ft_sstrdel(char **sstr, int index);

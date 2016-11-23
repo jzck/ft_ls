@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:10:03 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/22 16:55:20 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/23 18:40:59 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,31 @@
 # define LS_LEGAL_OPTS			"larRt"
 # define LS_MSG_ILLEGAL_OPT		"ft_ls: illegal option -- %c\n"
 # define LS_MSG_USAGE			"usage: ls [-%s] [file ...]\n"
-# define LS_MSG_FILE_ERR		"ls: %s: no such file or directory\n"
-# define LS_MSG_ACC_ERR			"ls: %s: Permission Denied\n"
+# define LS_MSG_FILE_ERR		"ls: %s: No such file or directory\n"
+# define LS_MSG_ACC_ERR			"ls: %s: Permission denied\n"
 
-# define OPTS_LL		0x0001
-# define OPTS_LA		0x0002
-# define OPTS_LR		0x0004
-# define OPTS_UR		0x0008
-# define OPTS_LT		0x0010
-# define OPTS_ONE		0x0020
-# define OPTS_HEAD		0x1000
+# define OPTS_LA		0x0000001
+# define OPTS_LC		0x0000002
+# define OPTS_LD		0x0000004
+# define OPTS_LF		0x0000008
+# define OPTS_LL		0x0000010
+# define OPTS_LP		0x0000020
+# define OPTS_LR		0x0000040
+# define OPTS_LT		0x0000080
+# define OPTS_LU		0x0000100
+# define OPTS_UA		0x0000200
+# define OPTS_UR		0x0000400
+# define OPTS_UU		0x0000800
+# define OPTS_US		0x0001000
+# define OPTS_ONE		0x0002000
+# define OPTS_ERR_A		0x0010000
+# define OPTS_HEAD		0x0100000
+
+# define TIME_MASK		OPTS_LC | OPTS_LU | OPTS_UU
 
 # include "libft.h"
 # include <errno.h>
+# include <stdio.h>
 # include <dirent.h>
 # include <unistd.h>
 # include <sys/stat.h>
@@ -62,10 +74,16 @@ int		ft_ls_parse(int ac, char **av, t_list **dir, t_list **ent);
 void	ft_ls_dirs(t_list *dir, int opts);
 void	ft_ls_files(t_list **ent, t_list **dir, t_lsdata *topdir, int *opts);
 
-void	ft_lsdata_filename(t_lsdata *data);
+int		ft_cmp_mtime(t_lsdata *dat1, t_lsdata *dat2);
+int		ft_cmp_atime(t_lsdata *dat1, t_lsdata *dat2);
+int		ft_cmp_ctime(t_lsdata *dat1, t_lsdata *dat2);
+int		ft_cmp_btime(t_lsdata *dat1, t_lsdata *dat2);
+
+void	ft_lsdata_filename(t_lsdata *data, t_lsdata *topdir, int opts);
 int		ft_lsdata_cmp_name(t_lsdata *dat1, t_lsdata *dat2);
-int		ft_lsdata_cmp_time(t_lsdata *dat1, t_lsdata *dat2);
+int		ft_lsdata_cmp_size(t_lsdata *dat1, t_lsdata *dat2);
 int		ft_lsdata_cmp0(t_lsdata *dat1, char *dataref);
+int		ft_lsdata_cmpA(t_lsdata *data, char *dataref);
 
 void	ft_ent_filter(t_list **ent, int opts);
 void	ft_ent_sort(t_list **ent, int opts);
@@ -75,12 +93,12 @@ int		ft_ent_has_dir(t_list *ent);
 t_list	*ft_ent_get_dirs(t_list **ent);
 
 t_list	*ft_ent_get_dirs(t_list **ent);
-t_list	*ft_dir_get_ents(t_lsdata *topdir);
+t_list	*ft_dir_get_ents(t_lsdata *topdir, int *opts);
 
-void	ft_ls_short(t_list *ent);
+void	ft_ls_short(t_list *ent, t_lsdata *topdir, int opts);
 
-int		ft_ls_long(t_list *ent, t_lsdata *topdir);
-int		ft_ls_long_print(t_list *ent, t_pads pads);
+int		ft_ls_long(t_list *ent, t_lsdata *topdir, int opts);
+int		ft_ls_long_print(t_list *ent, t_lsdata *topdir, t_pads pads, int opts);
 
 void	ft_ls_long_total(t_list *ent);
 int		ft_ls_long_pads(t_list *ent, t_pads *pads);
@@ -88,7 +106,7 @@ void	ft_ls_long_type(mode_t m);
 void	ft_ls_long_rights(mode_t m);
 int		ft_ls_long_xattr(mode_t m, char *path);
 int		ft_ls_long_middle(struct stat *stat, t_pads *pads);
-void	ft_ls_long_date(struct stat *stat);
+void	ft_ls_long_date(struct stat *stat, int opts);
 int		ft_ls_long_lnk(t_lsdata *data);
 
 void	ft_error_option(char c);

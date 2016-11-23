@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:57:21 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/22 17:11:40 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/23 18:53:01 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_ls_dirs(t_list *dir, int opts)
 		tmp = dir;
 		dir = dir->next;
 		ft_lstdel(&ent, &ft_ent_free);
-		ent = ft_dir_get_ents(dirdata);
+		ent = ft_dir_get_ents(dirdata, &opts);
 		ft_ls_files(&ent, &dir, dirdata, &opts);
 		ft_lstdelone(&tmp, &ft_ent_free);
 		if (opts & OPTS_UR)
@@ -44,7 +44,8 @@ void	ft_ls_files(t_list **ent, t_list **dir, t_lsdata *topdir, int *opts)
 {
 	if (ent)
 	{
-		ft_ent_filter(ent, *opts);
+		if (topdir)
+			ft_ent_filter(ent, *opts);
 		ft_ent_sort(ent, *opts);
 		ft_ent_print(*ent, opts, topdir, *dir);
 	}

@@ -6,13 +6,13 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:58:05 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/22 16:07:01 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/23 17:39:50 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		ft_ls_long(t_list *ent, t_lsdata *topdir)
+int		ft_ls_long(t_list *ent, t_lsdata *topdir, int opts)
 {
 	t_pads	pads;
 
@@ -22,14 +22,14 @@ int		ft_ls_long(t_list *ent, t_lsdata *topdir)
 		return (1);
 	while (ent)
 	{
-		if (ft_ls_long_print(ent, pads))
+		if (ft_ls_long_print(ent, topdir, pads, opts))
 			return (1);
 		ent = ent->next;
 	}
 	return (0);
 }
 
-int		ft_ls_long_print(t_list *ent, t_pads pads)
+int		ft_ls_long_print(t_list *ent, t_lsdata *topdir, t_pads pads, int opts)
 {
 	t_lsdata		*data;
 	struct stat		stat;
@@ -45,9 +45,9 @@ int		ft_ls_long_print(t_list *ent, t_pads pads)
 		return (1);
 	if (ft_ls_long_middle(&stat, &pads))
 		return (1);
-	ft_ls_long_date(&stat);
+	ft_ls_long_date(&stat, opts);
 	ft_printf(" ");
-	ft_lsdata_filename(data);
+	ft_lsdata_filename(data, topdir, opts);
 	if (ft_ls_long_lnk(data))
 		return (1);
 	return (0);
