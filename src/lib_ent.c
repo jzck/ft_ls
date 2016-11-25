@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:00:05 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/23 18:54:38 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/25 18:27:02 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	ft_ent_filter(t_list **ent, int opts)
 {
-	if (!(opts & OPTS_LA))
+	if (!(opts & (OPTS_LA | OPTS_LF)))
 	{
 		if (!(opts & OPTS_UA))
 			ft_lst_delif(ent, ".", &ft_lsdata_cmp0, &ft_ent_free);
 		else
-			ft_lst_delif(ent, ".", &ft_lsdata_cmpA, &ft_ent_free);
+			ft_lst_delif(ent, ".", &ft_lsdata_cmpa, &ft_ent_free);
 	}
 }
 
@@ -60,7 +60,7 @@ void	ft_ent_print(t_list *ent, int *opts, t_lsdata *topdir, t_list *nextdir)
 	}
 	if (ent)
 	{
-		if (*opts & OPTS_LL)
+		if (*opts & (OPTS_LL | OPTS_LG | OPTS_LO))
 			ft_ls_long(ent, topdir, *opts);
 		else
 			ft_ls_short(ent, topdir, *opts);
@@ -72,7 +72,7 @@ void	ft_ent_print(t_list *ent, int *opts, t_lsdata *topdir, t_list *nextdir)
 	}
 	if ((!topdir && nextdir && ent)
 			|| (topdir && nextdir)
-			|| (((*opts & OPTS_UR)
+			|| (((*opts & OPTS_UR) && !(*opts & OPTS_LD)
 				&& ent && ft_ent_has_dir(ent))))
 		ft_putchar('\n');
 }

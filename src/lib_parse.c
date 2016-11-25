@@ -6,11 +6,36 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:02:46 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/23 18:46:50 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/25 18:31:15 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+t_opts	g_opts[] =
+{
+	{'A', OPTS_UA, 0},
+	{'F', OPTS_UF, OPTS_LP},
+	{'G', OPTS_UG, 0},
+	{'R', OPTS_UR, 0},
+	{'S', OPTS_US, 0},
+	{'T', OPTS_UT, 0},
+	{'U', OPTS_UU, TIME_MASK},
+	{'a', OPTS_LA, 0},
+	{'c', OPTS_LC, 0},
+	{'d', OPTS_LD, 0},
+	{'f', OPTS_LF, 0},
+	{'g', OPTS_LG, 0},
+	{'l', OPTS_LL, 0},
+	{'o', OPTS_LO, 0},
+	{'p', OPTS_LP, OPTS_UF},
+	{'r', OPTS_LR, 0},
+	{'t', OPTS_LT, 0},
+	{'u', OPTS_LU, TIME_MASK},
+	{'1', OPTS_ONE, (OPTS_LL | OPTS_LG | OPTS_LO)},
+	{0, 0, 0},
+};
+
 
 static void	ft_ls_parse_files(int ac, char **av, int opts, t_list **dir, t_list **ent)
 {
@@ -22,13 +47,11 @@ static void	ft_ls_parse_files(int ac, char **av, int opts, t_list **dir, t_list 
 	while (++i < ac)
 	{
 		if (stat(av[i], &data.stat) < 0)
-		{
 			if (lstat(av[i], &data.stat) < 0)
 			{
 				ft_error_dir(av[i]);
 				continue ;
 			}
-		}
 		if (opts & OPTS_LL || !S_ISDIR(data.stat.st_mode))
 			if (lstat(av[i], &data.stat) < 0)
 			{
@@ -46,65 +69,22 @@ static void	ft_ls_parse_files(int ac, char **av, int opts, t_list **dir, t_list 
 static int	ft_getopts(char *str)
 {
 	int	i;
+	int	j;
 	int	opts;
 
 	i = 0;
 	opts = 0;
 	while (str[i])
 	{
-		if (str[i] == 'l')
-		{
-			opts |= OPTS_LL;
-			opts &= ~OPTS_ONE;
-		}
-		else if (str[i] == '1')
-		{
-			opts |= OPTS_ONE;
-			opts &= ~OPTS_LL;
-		}
-		else if (str[i] == 'a')
-			opts |= OPTS_LA;
-		else if (str[i] == 'c')
-		{
-			opts &= ~TIME_MASK;
-			opts |= OPTS_LC;
-		}
-		else if (str[i] == 'f')
-		{
-			opts |= OPTS_LF;
-			opts |= OPTS_LA;
-		}
-		else if (str[i] == 't')
-			opts |= OPTS_LT;
-		else if (str[i] == 'r')
-			opts |= OPTS_LR;
-		else if (str[i] == 'd')
-		{
-			opts &= ~OPTS_UR;
-			opts |= OPTS_LD;
-		}
-		else if (str[i] == 'p')
-			opts |= OPTS_LP;
-		else if (str[i] == 'u')
-		{
-			opts &= ~TIME_MASK;
-			opts |= OPTS_LU;
-		}
-		else if (str[i] == 'A')
-			opts |= OPTS_UA;
-		else if (str[i] == 'R')
-		{
-			if (!(opts & OPTS_LD))
-				opts |= OPTS_UR;
-		}
-		else if (str[i] == 'U')
-		{
-			opts &= ~TIME_MASK;
-			opts |= OPTS_UU;
-		}
-		else if (str[i] == 'S')
-			opts |= OPTS_US;
-		else
+		j = -1;
+		while (g_opts[++j].id)
+			if (g_opts[j].id == str[i])
+			{
+				opts &= ~g_opts[j].off;
+				opts |= g_opts[j].on;
+				break ;
+			}
+		if (!ft_strchr(LS_LEGAL_OPTS, str[i]))
 		{
 			ft_error_option(str[i]);
 			exit(1);

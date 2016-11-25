@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:58:05 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/23 17:39:50 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/25 14:18:29 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		ft_ls_long_print(t_list *ent, t_lsdata *topdir, t_pads pads, int opts)
 	ft_ls_long_rights(stat.st_mode);
 	if (ft_ls_long_xattr(stat.st_mode, data->path))
 		return (1);
-	if (ft_ls_long_middle(&stat, &pads))
+	if (ft_ls_long_middle(&stat, &pads, opts))
 		return (1);
 	ft_ls_long_date(&stat, opts);
 	ft_printf(" ");

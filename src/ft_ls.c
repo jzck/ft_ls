@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:57:21 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/23 18:53:01 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/25 12:15:59 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_ls_dirs(t_list *dir, int opts)
 		ent = ft_dir_get_ents(dirdata, &opts);
 		ft_ls_files(&ent, &dir, dirdata, &opts);
 		ft_lstdelone(&tmp, &ft_ent_free);
-		if (opts & OPTS_UR)
+		if (opts & OPTS_UR && !(opts & OPTS_LD))
 		{
 			dir_r = ft_ent_get_dirs(&ent);
 			ft_lst_merge(&dir_r, dir);

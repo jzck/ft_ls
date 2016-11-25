@@ -8,7 +8,7 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +98 src/lib_ls_long2.c
+badd +1 src/lib_ls_long2.c
 badd +27 src/ft_ls_long.c
 badd +25 includes/ft_ls.h
 badd +60 ~/.tmux.conf
@@ -48,9 +48,7 @@ badd +19 src/lib_ent.c
 badd +11 .Makefile.swp
 badd +18 ~/dotfiles/vim.symlink/plugins.vim
 badd +22 libft/src/str/ft_strsub.c
-argglobal
-silent! argdel *
-argadd src/lib_ls_long2.c
+args src/lib_ls_long2.c
 edit src/main.c
 set splitbelow splitright
 set nosplitbelow
@@ -67,7 +65,7 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 20) / 41)
+let s:l = 1 - ((0 * winheight(0) + 40) / 81)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt

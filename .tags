@@ -15,6 +15,7 @@ ft_error_access	src/lib_error.c	/^void	ft_error_access(char *s)$/
 ft_error_dir	src/lib_error.c	/^void	ft_error_dir(char *s)$/
 ft_error_option	src/lib_error.c	/^void	ft_error_option(char c)$/
 ft_getopts	src/lib_parse.c	/^static int	ft_getopts(char *str)$/
+ft_ls_color	src/ft_ls_color.c	/^void	ft_ls_color(mode_t m)$/
 ft_ls_dirs	src/ft_ls.c	/^void	ft_ls_dirs(t_list *dir, int opts)$/
 ft_ls_files	src/ft_ls.c	/^void	ft_ls_files(t_list **ent, t_list **dir, t_lsd/
 ft_ls_long	src/ft_ls_long.c	/^int		ft_ls_long(t_list *ent, t_lsdata *topdir, int/
@@ -30,6 +31,7 @@ ft_ls_long_xattr	src/lib_ls_long2.c	/^int		ft_ls_long_xattr(mode_t m, char *path
 ft_ls_parse	src/lib_parse.c	/^int			ft_ls_parse(int ac, char **av, t_list **dir,/
 ft_ls_parse_files	src/lib_parse.c	/^static void	ft_ls_parse_files(int ac, char **av, i/
 ft_ls_parse_options	src/lib_parse.c	/^static int	ft_ls_parse_options(int ac, char **av, /
+ft_ls_postname	src/ft_ls_postname.c	/^void	ft_ls_postname(mode_t m, int opts)$/
 ft_ls_short	src/ft_ls_short.c	/^void	ft_ls_short(t_list *ent, t_lsdata *topdir, in/
 ft_lsdata_cmp0	src/lib_lsdata.c	/^int		ft_lsdata_cmp0(t_lsdata *data, char *dataref)/
 ft_lsdata_cmpA	src/lib_lsdata.c	/^int		ft_lsdata_cmpA(t_lsdata *data, char *dataref)/

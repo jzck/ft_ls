@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:01:01 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/23 16:19:43 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/25 17:22:53 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,17 @@ int		ft_ls_long_lnk(t_lsdata *data)
 
 int		ft_ls_long_xattr(mode_t m, char *path)
 {
-	int		n;
-	char	x;
+	char		x;
+	acl_t		acl;
+	acl_entry_t	acl_entry;
 
-	x = ' ';
-	n = 0;
-	if (!S_ISBLK(m) && !S_ISCHR(m))
-		if ((n = ft_xattr_count(path)) == -1)
-			;
-	if (n > 0)
-		x = '@';
+	acl = acl_get_file(path, ACL_TYPE_DEFAULT | ACL_TYPE_ACCESS);
+	if ((acl_get_entry(acl, ACL_FIRST_ENTRY, &acl_entry)) == 0)
+		x = '+';
+	else if (!S_ISBLK(m) && !S_ISCHR(m))
+		x = ft_xattr_count(path) > 0 ? '@' : ' ';
+	else
+		x = ' ';
 	ft_putchar(x);
 	return (0);
 }
