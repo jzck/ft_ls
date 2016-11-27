@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:59:09 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/25 18:26:53 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/27 11:15:37 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	ft_lsdata_filename(t_lsdata *data, t_lsdata *topdir, int opts)
 	struct dirent	*dirent;
 
 	dirent = data->dirent;
-	if (opts & OPTS_UG)
+	if (opts & OPTS_UG && isatty(1))
 		ft_ls_color(data->stat.st_mode);
 	if (data->path)
 		ft_printf("%s", topdir ? ft_path_notdir(data->path) : data->path);
 	else if (dirent && *dirent->d_name)
 		ft_printf("%s", dirent->d_name);
-	if (opts & OPTS_UG)
+	if (opts & OPTS_UG && isatty(1))
 		ft_color_reset();
 	ft_ls_postname(data->stat.st_mode, opts);
 }

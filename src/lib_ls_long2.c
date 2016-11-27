@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:01:01 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/25 17:22:53 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/27 13:08:09 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ int		ft_ls_long_xattr(mode_t m, char *path)
 {
 	char		x;
 	acl_t		acl;
-	acl_entry_t	acl_entry;
 
-	acl = acl_get_file(path, ACL_TYPE_DEFAULT | ACL_TYPE_ACCESS);
-	if ((acl_get_entry(acl, ACL_FIRST_ENTRY, &acl_entry)) == 0)
+	x = ' ';
+	if (!S_ISBLK(m) && !S_ISCHR(m) && ft_xattr_count(path) > 0)
+		x = '@';
+	else if ((acl = acl_get_file(path, ACL_TYPE_EXTENDED)))
+	{
 		x = '+';
-	else if (!S_ISBLK(m) && !S_ISCHR(m))
-		x = ft_xattr_count(path) > 0 ? '@' : ' ';
-	else
-		x = ' ';
+		acl_free((void*)acl);
+	}
 	ft_putchar(x);
 	return (0);
 }
@@ -107,10 +107,9 @@ int		ft_ls_long_pads(t_list *ent, t_pads *pads)
 		FT_MAX_WR(pads->nlink, (int)ft_uilen(stat.st_nlink));
 		FT_MAX_WR(pads->size, (int)ft_ilen(stat.st_size));
 		if (S_ISCHR(stat.st_mode) || S_ISBLK(stat.st_mode))
-		{
 			FT_MAX_WR(pads->minor, (int)ft_ilen(minor(stat.st_rdev)));
+		if (S_ISCHR(stat.st_mode) || S_ISBLK(stat.st_mode))
 			FT_MAX_WR(pads->major, (int)ft_ilen(major(stat.st_rdev)));
-		}
 	}
 	pads->size = FT_MAX(pads->size, pads->minor ?
 			pads->minor + pads->major + 3 : pads->size);

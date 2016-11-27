@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 15:02:46 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/25 18:31:15 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/27 12:49:32 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_opts	g_opts[] =
 	{'T', OPTS_UT, 0},
 	{'U', OPTS_UU, TIME_MASK},
 	{'a', OPTS_LA, 0},
-	{'c', OPTS_LC, 0},
+	{'c', OPTS_LC, TIME_MASK},
 	{'d', OPTS_LD, 0},
 	{'f', OPTS_LF, 0},
 	{'g', OPTS_LG, 0},
@@ -36,15 +36,14 @@ t_opts	g_opts[] =
 	{0, 0, 0},
 };
 
-
-static void	ft_ls_parse_files(int ac, char **av, int opts, t_list **dir, t_list **ent)
+static void	ft_ls_parse_files(char **av, int opts, t_list **dir, t_list **ent)
 {
 	t_lsdata	data;
 	int			i;
 
 	data.dirent = NULL;
 	i = -1;
-	while (++i < ac)
+	while (av[++i])
 	{
 		if (stat(av[i], &data.stat) < 0)
 			if (lstat(av[i], &data.stat) < 0)
@@ -128,8 +127,8 @@ int			ft_ls_parse(int ac, char **av, t_list **dir, t_list **ent)
 	opts |= (ac - i > 1) ? OPTS_HEAD : 0;
 	ft_sstrsort(av + i, &ft_strcmp);
 	if (i == ac)
-		ft_ls_parse_files(1, (char*[2]){"."},  opts,dir, ent);
+		ft_ls_parse_files((char *[2]){"."}, opts, dir, ent);
 	else
-		ft_ls_parse_files(ac - i, av + i, opts, dir, ent);
+		ft_ls_parse_files(av + i, opts, dir, ent);
 	return (opts);
 }

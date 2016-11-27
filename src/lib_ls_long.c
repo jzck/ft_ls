@@ -6,7 +6,7 @@
 /*   By: jhalford <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 14:59:51 by jhalford          #+#    #+#             */
-/*   Updated: 2016/11/25 18:31:12 by jhalford         ###   ########.fr       */
+/*   Updated: 2016/11/27 11:57:47 by jhalford         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	ft_ls_long_date(struct stat *stat, int opts)
 		ft_printf(" %s %s %s:%s:%s %s", time->month, time->day, time->hour,
 				time->min, time->sec, time->year);
 	else if (ft_time_isrecent(st_time))
-		ft_printf(" %s %s %s:%s", time->month, time->day, time->hour, time->min);
+		ft_printf(" %s %s %s:%s",
+				time->month, time->day, time->hour, time->min);
 	else
 		ft_printf(" %s %s  %s", time->month, time->day, time->year);
 	ft_mytime_free(&time);

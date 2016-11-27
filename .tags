@@ -29,12 +29,12 @@ ft_ls_long_total	src/lib_ls_long2.c	/^void	ft_ls_long_total(t_list *ent)$/
 ft_ls_long_type	src/lib_ls_long.c	/^void	ft_ls_long_type(mode_t m)$/
 ft_ls_long_xattr	src/lib_ls_long2.c	/^int		ft_ls_long_xattr(mode_t m, char *path)$/
 ft_ls_parse	src/lib_parse.c	/^int			ft_ls_parse(int ac, char **av, t_list **dir,/
-ft_ls_parse_files	src/lib_parse.c	/^static void	ft_ls_parse_files(int ac, char **av, i/
+ft_ls_parse_files	src/lib_parse.c	/^static void	ft_ls_parse_files(char **av, int opts,/
 ft_ls_parse_options	src/lib_parse.c	/^static int	ft_ls_parse_options(int ac, char **av, /
 ft_ls_postname	src/ft_ls_postname.c	/^void	ft_ls_postname(mode_t m, int opts)$/
 ft_ls_short	src/ft_ls_short.c	/^void	ft_ls_short(t_list *ent, t_lsdata *topdir, in/
 ft_lsdata_cmp0	src/lib_lsdata.c	/^int		ft_lsdata_cmp0(t_lsdata *data, char *dataref)/
-ft_lsdata_cmpA	src/lib_lsdata.c	/^int		ft_lsdata_cmpA(t_lsdata *data, char *dataref)/
 ft_lsdata_cmp_name	src/lib_lsdata.c	/^int		ft_lsdata_cmp_name(t_lsdata *dat1, t_lsdata */
 ft_lsdata_cmp_size	src/lib_lsdata.c	/^int		ft_lsdata_cmp_size(t_lsdata *dat1, t_lsdata */
+ft_lsdata_cmpa	src/lib_lsdata.c	/^int		ft_lsdata_cmpa(t_lsdata *data, char *dataref)/
 ft_lsdata_filename	src/lib_lsdata.c	/^void	ft_lsdata_filename(t_lsdata *data, t_lsdata */
