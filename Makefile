@@ -36,8 +36,10 @@ $(NAME): libft/libft.a $(DF_OBJ)
 
 clean:
 	$(RM) $(D_OBJ)
+	@$(MAKE) -C libft clean 2>/dev/null
 
 fclean: clean
 	$(RM) $(NAME)
+	@$(MAKE) -C libft fclean 2>/dev/null
 
 re: fclean all
