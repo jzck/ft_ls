@@ -28,10 +28,10 @@ $(D_OBJ)/%.o: $(D_SRC)/%.c $(D_INC)
 	@$(CC) $(O_INC) $(W_FLAGS) -c $< -o $@ $(D_FLAGS)
 	@echo "Compiling "$<"..."
 
-libft:
+libft/libft.a:
 	@$(MAKE) -C libft/ 2>/dev/null
 
-$(NAME): $(DF_OBJ) libft
+$(NAME): libft/libft.a $(DF_OBJ)
 	$(CC) $(O_INC) -Llibft -lft $(W_FLAGS) $(DF_OBJ) -o $@ $(D_FLAGS)
 
 clean:
